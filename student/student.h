@@ -1,6 +1,7 @@
 #pragma once
 #ifndef STUDENT_H
 #define STUDENT_H
+
 #include <string>
 
 // Define student class
@@ -8,7 +9,7 @@ class Student {
     // Define attributes
 private:
     int studentID;
-    int daysPerCourse[3] = { 30, 30, 30 };
+    int daysPerCourse[3] = { 30, 30, 30};
     int age;
     std::string firstName;
     std::string lastName;
@@ -80,5 +81,7 @@ public:
         degree = graduated;
     }
 };
+
+// need to add print function here
 
 #endif // STUDENT_H
