@@ -9,6 +9,10 @@ enum DegreeProgram {SECURITY, NETWORK, SOFTWARE};
 
 #endif 
 
+
+
+
+
 // student.h
 #pragma once
 #ifndef STUDENT_H
@@ -28,7 +32,6 @@ private:
     std::string lastName;
     std::string emailAddress;
     std::string degree;
-
 
 public:
     // Declare constructors
@@ -61,6 +64,11 @@ public:
 #endif
 
 
+
+
+
+
+
 // roster.h
 #ifndef ROSTER_H
 #define ROSTER_H
@@ -70,41 +78,45 @@ class Roster {
 private:
     // Array attribute to hold 5 students
     Student* classRosterArray[5];
-    int studentNum;
 
 public:
     // Constructor
     Roster();
 
-
     // Declare accessors and mutators
-    void add(std::string id, std::string firstName, std::string email, int year,
+    void add(int id, std::string firstName, std::string email, int year,
         int CourseDays1, int CourseDays2, int CourseDays3, Degreeprogram degreeProgram);
 
     void remove(std::string id);
 
-    void printAll();
+    void printAll() const;
 
-    void printAverageDaysInCourse(std::string id);
+    void printAverageDaysInCourse(int id) const;
 
-    void printInvalidEmails();
+    void printInvalidEmails() const;
 
-    void printByDegreeProgram(DegreeProgram degreeProgram);
+    void printByDegreeProgram(DegreeProgram degreeProgram) const;
 
     // Destructor
     ~Roster();
 };
+#endif
 
 
 
-    // roster.cpp
-    // Constructor to initialize the ptr array
-    Roster(Student* arr[5]) {
+
+
+// roster.cpp
+#include "roster.h"
+#include <iostream>
+
+// Constructor to initialize the ptr array
+    Roster::Roster() {
         for (int i = 0; i < 5; ++i) {
-            classRosterArray[i] = arr[i];
+            classRosterArray[i] = nullptr;
         }
     }
-    
+  
     // roster.cpp
     // implment function add
 
