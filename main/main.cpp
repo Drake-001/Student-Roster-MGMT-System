@@ -2,17 +2,19 @@
 #include <string>
 
 // degree.h
-enum DegreeProgram {
-	 SECURITY = "Security",
-	 NETWORK = "Network",
-	 SOFTWARE = "Software";
-};
+#ifndef DEGREE_H
+#define DEGREE_H
+
+enum DegreeProgram {SECURITY, NETWORK, SOFTWARE};
+
+#endif 
 
 // student.h
 #pragma once
 #ifndef STUDENT_H
 #define STUDENT_H
 
+#include "degree.h"
 #include <string>
 
 // Define student class
@@ -30,69 +32,32 @@ private:
 
 public:
     // Declare constructors
-    Student(int id, int days, int year, string fn, string ln, string email, string deg) {
-        studentID = id;
-        age = year;
-        firstName = fn;
-        lastName = ln;
-        emailAddress = email;
-        degree = deg;
-        // daysPerCourse = days;
-    }
+    Student(int studentID, int days, int age, std::string fname, std::string lname, std::string email, std::string degree);
 
     // Declare accessors and mutators
-    int getID() const {
-        return studentID;
-    }
-    void setStudentID(int id) {
-        studentID = id;
-    }
+    int getStudentID() const;
+    void setStudentID(int id);
 
-    int getDaysPerCourse() const {
-        return daysPerCourse[3];
-    }
-    void setDaysPerCourse(int days1, int days2, int days3) {
-        daysPerCourse[0] = days1;
-        daysPerCourse[1] = days2;
-        daysPerCourse[2] = days3;
-    }
+    int getDaysPerCourse() const;
+    void setDaysPerCourse(int days);
 
-    int age() const {
-        return age;
-    }
-    void setAge(int bDay) {
-        age = bDay;
-    }
+    int age() const;
+    void setAge(int age);
 
-    std::string getFirstName() const {
-        return firstName;
-    }
-    void setFirstName(const std::string& fName) {
-        firstName = fName;
-    }
+    std::string getFirstName() const;
+    void setFirstName(std::string fName);
 
-    std::string getLastName() const {
-        return lastName;
-    }
-    void setLastName(const std::string& lName) {
-        lastName = lName;
-    }
+    std::string getLastName();
+    void setLastName(std::string lName);
 
-    std::string getEmailAddress() const {
-        return emailAdress;
-    }
-    void setEmailAddress(const std::string& email) {
-        emailAdress = email;
-    }
+    std::string getEmailAddress() const;
+    void setEmailAddress(std::string email);
 
-    std::string getDegree() const {
-        return degree;
-    }
-    void setDegree(const std::string& graduated) {
-        degree = graduated;
-    }
-};    // need to add print function here
+    std::string getDegree() const;
+    void setDegree(std::string graduated);
 
+    void print() const;
+};
 #endif
 
 
