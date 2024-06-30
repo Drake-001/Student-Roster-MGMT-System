@@ -64,6 +64,40 @@ public:
 #endif
 
 
+// student.cpp
+#include "student.h"
+#include <iostream>
+
+// constructor
+Student::Student(int studentID, int days, int age, std::string fname, std::string lname, std::string email, std::string degree)
+    : studentID(id), days(days), age(age), fname(fname), lname(lname), email(email), degree(degree) {}
+
+
+// Define accesssors and mutators
+int Student::getStudentID() const { return studentID; }
+void Student::setStudentID(std::string studentID) { this->studentID = studentID; }
+
+int Student::getDays() const { return days; }
+void Student::setDays(int days) { this->days = days; }
+
+int Student::getAge() const { return age; }
+void Student::setage(int age) { this->age = age; }
+
+std::string Student::getFname() const { return fname; }
+void Student::setFname(std::string fname) { this->fname = fname; }
+
+std::string Student::getLname() const { return lname; }
+void Student::setLame(std:string lname) { this->lname = lname; }
+
+std::string Student::getEmail() const { return email; }
+void Student::setEmail(std::string email) { this->email = email; }
+
+std::string Student::getDegree() const { return degree; }
+void Student::setDegree(std::string degree) { this->degree = degree; }
+
+
+
+
 
 
 
@@ -80,8 +114,12 @@ private:
     Student* classRosterArray[5];
 
 public:
-    // Constructor
-    Roster();
+    // Constructor to initialize the ptr array
+    Roster::Roster() {
+        for (int i = 0; i < 5; ++i) {
+            classRosterArray[i] = nullptr;
+        }
+    }
 
     // Declare accessors and mutators
     void add(int id, std::string firstName, std::string email, int year,
@@ -110,24 +148,28 @@ public:
 #include "roster.h"
 #include <iostream>
 
-// Constructor to initialize the ptr array
-    Roster::Roster() {
-        for (int i = 0; i < 5; ++i) {
-            classRosterArray[i] = nullptr;
-        }
-    }
-  
-    // roster.cpp
-    // implment function add
+// implment function add
+void Roster::add(Student student) {
+    students.push_back(student);
+}
+    
 
-    // implment function remove
+// implment function remove
+void Roster::remove() {};
 
-    // implment function print_all
 
-    // implment function print_average_days_in_course
+// implment function print_all
+void Roster::printAll() {};
 
-    // implment print_invalid_emails
 
-    // implment print_by_degree_program
+// implment function print_average_days_in_course
+void Roster::printAverageDaysInCourse()
 
+
+// implment print_invalid_emails
+void Roster::printInvalidEmails() {};
+
+
+// implment print_by_degree_program
+void Roster::printByDegreeProgram() {};
 
