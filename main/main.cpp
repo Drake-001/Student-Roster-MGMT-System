@@ -13,6 +13,18 @@ enum DegreeProgram {SECURITY, NETWORK, SOFTWARE};
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // student.h
 #pragma once
 #ifndef STUDENT_H
@@ -64,6 +76,23 @@ public:
 #endif
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // student.cpp
 #include "student.h"
 #include <iostream>
@@ -103,6 +132,17 @@ void Student::setDegree(std::string degree) { this->degree = degree; }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 // roster.h
 #ifndef ROSTER_H
 #define ROSTER_H
@@ -114,25 +154,15 @@ private:
     Student* classRosterArray[5];
 
 public:
-    // Constructor to initialize the ptr array
-    Roster::Roster() {
-        for (int i = 0; i < 5; ++i) {
-            classRosterArray[i] = nullptr;
-        }
-    }
+    Roster();
 
     // Declare accessors and mutators
     void add(int id, std::string firstName, std::string email, int year,
         int CourseDays1, int CourseDays2, int CourseDays3, Degreeprogram degreeProgram);
-
     void remove(std::string id);
-
     void printAll() const;
-
     void printAverageDaysInCourse(int id) const;
-
     void printInvalidEmails() const;
-
     void printByDegreeProgram(DegreeProgram degreeProgram) const;
 
     // Destructor
@@ -144,32 +174,121 @@ public:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // roster.cpp
 #include "roster.h"
 #include <iostream>
 
-// implment function add
-void Roster::add(Student student) {
-    students.push_back(student);
+// Constructor to initialize the ptr array
+Roster::Roster() {
+    for (int i = 0; i < 5; ++i) {
+        classRosterArray[i] = nullptr;
+    }
 }
-    
+
+// Implement function add student
+void Roster::add(int studentID, std::string firstName, std::string lastName, int age, int daysPerCourse, std::string emailAddress, std:: Degree degree) {
+    int daysPerCourse[3] = { daysPerCourse1, daysPerCourse2, daysPerCourse3 };
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] == nullptr) {
+            classRosterArray[i] == new Student(studentID, firstName, lastName, age, daysPerCourse, emailAddress, degree);
+            break;
+        }
+    }
+}
+   
 
 // implment function remove
-void Roster::remove() {};
+void Roster::remove(std::string id) {
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
+            delete classRosterArray[i];
+            classRosterArray[i] = nullprt;
+            std::cout << "Student " << studentID << " removed." << std::endl;
+            return;
+        }
+    }
+    std::cout << "Student" << studentID << " not found." << std::endl;
+}
+
+
+
 
 
 // implment function print_all
-void Roster::printAll() {};
-
+void Roster::printAll() const {
+    for (const auto& student : students) {
+        student.print();
+    }
+}
 
 // implment function print_average_days_in_course
-void Roster::printAverageDaysInCourse()
+void Roster::printAverageDaysInCourse(std::string studentID) const {
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr && classRosterArray[i]->getstudentID() == studentID) {
+            int* days = classRosterArray[i]->getDays();
+            std::cout << "Average days in Courses for " << studentID << ": "
+                << (days[0] + days[1] + days[2]) / 3.0 << std::endl;
+            return;
+        }
+    }
+}
+
+//**//
+void Roster::printInvalidEmails() const {
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr) {
+            std::string email = classRosterArray[i]->getEmailAddress();
+            if (email.find(' ') != std::string::npos || email.find('@') == std::string::npos || email.find('.') == std::string::npos) {
+                std::cout << "Invalid email: " << email << std::endl;
+            }
+        }
+    }
+}
 
 
-// implment print_invalid_emails
-void Roster::printInvalidEmails() {};
+//**//
+void Roster::printByDegree(DegreeProgram degree) const {
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr && classRosterArray[i]->getDegree() == degree) {
+            classRosterArray[i]->print();
+        }
+    }
+}
 
 
-// implment print_by_degree_program
-void Roster::printByDegreeProgram() {};
+//**//
+Roster::~Roster() {
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr) {
+            delete classRosterArray[i];
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// main.cpp
+
 
