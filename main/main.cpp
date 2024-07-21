@@ -9,22 +9,6 @@ enum DegreeProgram {SECURITY, NETWORK, SOFTWARE};
 
 #endif 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // student.h
 #pragma once
 #ifndef STUDENT_H
@@ -37,26 +21,26 @@ enum DegreeProgram {SECURITY, NETWORK, SOFTWARE};
 class Student {
     // Define attributes
 private:
-    int studentID;
-    int daysPerCourse[3] = { 30, 30, 30 };
+    std::string studentID;
+    int daysPerCourse[3];
     int age;
     std::string firstName;
     std::string lastName;
     std::string emailAddress;
-    std::string degree;
+    DegreeProgram degreeProgram;
 
 public:
     // Declare constructors
-    Student(int studentID, int days, int age, std::string fname, std::string lname, std::string email, std::string degree);
+    Student(std::string studentID, int days[], int age, std::string firstName, std::string lastName, std::string emailAddress, DegreeProgram degreeProgram);
 
     // Declare accessors and mutators
-    int getStudentID() const;
-    void setStudentID(int id);
+    std::string getStudentID() const;
+    void setStudentID(std::string id);
 
-    int getDaysPerCourse() const;
-    void setDaysPerCourse(int days);
+    int* getDaysPerCourse();
+    void setDaysPerCourse(int days[]);
 
-    int age() const;
+    int getAge() const;
     void setAge(int age);
 
     std::string getFirstName() const;
@@ -68,80 +52,51 @@ public:
     std::string getEmailAddress() const;
     void setEmailAddress(std::string email);
 
-    std::string getDegree() const;
-    void setDegree(std::string graduated);
+    DegreeProgram getDegreeProgram() const;
+    void setDegreeProgram(DegreeProgram degreeProgram);
+
 
     void print() const;
 };
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // student.cpp
 #include "student.h"
 #include <iostream>
 
 // constructor
-Student::Student(int studentID, int days, int age, std::string fname, std::string lname, std::string email, std::string degree)
-    : studentID(id), days(days), age(age), fname(fname), lname(lname), email(email), degree(degree) {}
-
+Student::Student(std::string studentID, int days[], int age, std::string firstName, std::string lastName, std::string emailAddress, DegreeProgram degreeProgram)
+    : studentID(studentID), firstName(firstName), lastName(lastName), emailAddress(emailAddress), age(age), degreeProgram(degreeProgram) {
+    for (int i = 0; i < 3; ++i) {
+        daysPerCourse[i] = days[i];
+    }
+}
 
 // Define accesssors and mutators
-int Student::getStudentID() const { return studentID; }
+std::string Student::getStudentID() const { return studentID; }
 void Student::setStudentID(std::string studentID) { this->studentID = studentID; }
 
-int Student::getDays() const { return days; }
-void Student::setDays(int days) { this->days = days; }
+int* Student::getDaysPerCourse() { return daysPerCourse; }
+void Student::setDaysPerCourse(int days[]) {
+    for (int i = 0; i < 3; ++i) {
+        daysPerCourse[i] = days[i];
+    }
+}
 
 int Student::getAge() const { return age; }
-void Student::setage(int age) { this->age = age; }
+void Student::setAge(int age) { this->age = age; }
 
-std::string Student::getFname() const { return fname; }
-void Student::setFname(std::string fname) { this->fname = fname; }
+std::string Student::getFirstName() const { return firstName; }
+void Student::setFirstName(std::string firstName) { this->firstName = firstName; }
 
-std::string Student::getLname() const { return lname; }
-void Student::setLame(std:string lname) { this->lname = lname; }
+std::string Student::getLastName() const { return lastName; }
+void Student::setLastName(std::string lastName) { this->lastName = lastName; }
 
-std::string Student::getEmail() const { return email; }
-void Student::setEmail(std::string email) { this->email = email; }
+std::string Student::getEmailAddress() const { return emailAddress; }
+void Student::setEmailAddress(std::string emailAddress) { this->emailAddress = emailAddress; }
 
-std::string Student::getDegree() const { return degree; }
-void Student::setDegree(std::string degree) { this->degree = degree; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+DegreeProgram Student::getDegreeProgram() const { return degreeProgram; }
+void Student::setDegreeProgram(DegreeProgram degreeProgram) { this->degreeProgram = degreeProgram; }
 
 // roster.h
 #ifndef ROSTER_H
@@ -157,11 +112,11 @@ public:
     Roster();
 
     // Declare accessors and mutators
-    void add(int id, std::string firstName, std::string email, int year,
-        int CourseDays1, int CourseDays2, int CourseDays3, Degreeprogram degreeProgram);
-    void remove(std::string id);
+    void add(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age,
+        int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram);
+    void remove(std::string studentID);
     void printAll() const;
-    void printAverageDaysInCourse(int id) const;
+    void printAverageDaysInCourse(std::string studentID) const;
     void printInvalidEmails() const;
     void printByDegreeProgram(DegreeProgram degreeProgram) const;
 
@@ -169,22 +124,6 @@ public:
     ~Roster();
 };
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // roster.cpp
 #include "roster.h"
@@ -198,46 +137,47 @@ Roster::Roster() {
 }
 
 // Implement function add student
-void Roster::add(int studentID, std::string firstName, std::string lastName, int age, int daysPerCourse, std::string emailAddress, std:: Degree degree) {
-    int daysPerCourse[3] = { daysPerCourse1, daysPerCourse2, daysPerCourse3 };
+void Roster::add(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age,
+    int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram) {
+    int daysInCourse[3] = { daysInCourse1, daysInCourse2, daysInCourse3 };
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] == nullptr) {
-            classRosterArray[i] == new Student(studentID, firstName, lastName, age, daysPerCourse, emailAddress, degree);
+            classRosterArray[i] = new Student(studentID, daysInCourse, age, firstName, lastName, emailAddress, degreeProgram); // Added break to exit loop after adding
             break;
         }
     }
 }
-   
 
+
+
+   
 // implment function remove
-void Roster::remove(std::string id) {
+void Roster::remove(std::string studentID) {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
             delete classRosterArray[i];
-            classRosterArray[i] = nullprt;
+            classRosterArray[i] = nullptr;
             std::cout << "Student " << studentID << " removed." << std::endl;
             return;
         }
     }
-    std::cout << "Student" << studentID << " not found." << std::endl;
+    std::cout << "Student " << studentID << " not found." << std::endl;
 }
 
-
-
-
-
-// implment function print_all
+// implment function print all
 void Roster::printAll() const {
-    for (const auto& student : students) {
-        student.print();
+    for (int i = 0; i < 5; ++i) {
+        if (classRosterArray[i] != nullptr) {
+            classRosterArray[i]->print();
+        }
     }
 }
 
-// implment function print_average_days_in_course
+// function print average days in course
 void Roster::printAverageDaysInCourse(std::string studentID) const {
     for (int i = 0; i < 5; ++i) {
-        if (classRosterArray[i] != nullptr && classRosterArray[i]->getstudentID() == studentID) {
-            int* days = classRosterArray[i]->getDays();
+        if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
+            int* days = classRosterArray[i]->getDaysPerCourse();
             std::cout << "Average days in Courses for " << studentID << ": "
                 << (days[0] + days[1] + days[2]) / 3.0 << std::endl;
             return;
@@ -245,7 +185,7 @@ void Roster::printAverageDaysInCourse(std::string studentID) const {
     }
 }
 
-//**//
+// function prints invalid email
 void Roster::printInvalidEmails() const {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr) {
@@ -257,18 +197,15 @@ void Roster::printInvalidEmails() const {
     }
 }
 
-
-//**//
-void Roster::printByDegree(DegreeProgram degree) const {
+// function print degrees by program
+void Roster::printByDegreeProgram(DegreeProgram degreeProgram) const {
     for (int i = 0; i < 5; ++i) {
-        if (classRosterArray[i] != nullptr && classRosterArray[i]->getDegree() == degree) {
+        if (classRosterArray[i] != nullptr && classRosterArray[i]->getDegreeProgram() == degreeProgram) {
             classRosterArray[i]->print();
         }
     }
 }
 
-
-//**//
 Roster::~Roster() {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr) {
@@ -277,18 +214,82 @@ Roster::~Roster() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // main.cpp
+#include "roster.h"
+#include <iostream>
+#include <sstream>
 
+int main() {
+    const std::string studentData[] =
+    { "A1,John,Smith,John1989@gm ail.com,20,30,35,40,SECURITY",
+        "A2,Suzan,Erickson,Erickson_1990@gmailcom,19,50,30,40,NETWORK",
+        "A3,Jack,Napoli,The_lawyer99yahoo.com,19,20,40,33,SOFTWARE",
+        "A4,Erin,Black,Erin.black@comcast.net,22,50,58,40,SECURITY",
+        "A5,Drake,Davis,drakedavis0203@gmail.com,32,30,30,30,SOFTWARE" };
+
+    std::cout << "Course: Scripting and Programming Applications" << std::endl;
+    std::cout << "Programming Language Used: C++" << std::endl;
+    std::cout << "WGU student ID: 011395991" << std::endl;
+    std::cout << "Student Name: Drake Davis" << std::endl;
+
+
+    Roster roster;
+
+    for (int i = 0; i < 5; ++i) {
+        std::string data = studentData[i];
+        std::stringstream ss(data);
+
+        // Declare variables for student data
+        std::string studentID, firstName, lastName, emailAddress, degreeString, 
+        int age, daysInCourse1, daysInCourse2, daysInCourse3;
+        DegreeProgram degree;
+
+        // Parse and assign values to variables
+        std::getline(ss, studentID, ',');
+        std::getline(ss, firstName, ',');
+        std::getline(ss, lastName, ',');
+        std::getline(ss, emailAddress, ',');
+        ss >> age;
+        ss.ignore(); // Ignores comma
+        ss >> daysInCourse1;
+        ss.ignore(); 
+        ss >> daysInCourse2;
+        ss.ignore(); 
+        ss >> daysInCourse3;
+        ss.ignore(); 
+        std::getline(ss, degreeString, ',');
+
+
+        // Converts the degree string to the degree enum
+        if (degreeString == "SOFTWARE") {
+            degree = SOFTWARE;
+        }
+        else if (degreeString == "SECURITY") {
+            degree = SECURITY;
+        }
+        else {
+            degree = NETWORK;
+        }
+
+        // Add the employee to the roster
+        roster.add(studentID, firstName, lastName, emailAddress, age, daysInCourse1, daysInCourse2, daysInCourse3, degree);
+    }
+
+
+    roster.printAll();
+    roster.printInvalidEmails();
+    
+    for (int i = 0; i < 5; ++i) {
+        if (roster.getStudent(i) != nullptr) { 
+            roster.printAverageDaysInCourse(roster.getStudent(i)->getStudentID());
+        }
+    }
+
+    roster.printByDegreeProgram(SOFTWARE);
+    roster.remove("A3");
+    roster.printAll();
+    roster.remove("A3");
+
+    return 0;
+}
 
