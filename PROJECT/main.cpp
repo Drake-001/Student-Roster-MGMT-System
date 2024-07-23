@@ -4,6 +4,13 @@
 #include <sstream>
 
 int main() {
+
+    std::cout << "Course: Scripting and Programming Applications" << std::endl;
+    std::cout << "Programming Language Used: C++" << std::endl;
+    std::cout << "WGU student ID: 011395991" << std::endl;
+    std::cout << "Student Name: Drake Davis" << std::endl;
+
+
     const std::string studentData[] =
     { "A1,John,Smith,John1989@gmail.com,20,30,35,40,SECURITY",
         "A2,Suzan,Erickson,Erickson_1990@gmail.com,19,50,30,40,NETWORK",
@@ -11,10 +18,7 @@ int main() {
         "A4,Erin,Black,Erin.black@comcast.net,22,50,58,40,SECURITY",
         "A5,Drake,Davis,drakedavis0203@gmail.com,32,30,30,30,SOFTWARE" };
 
-    std::cout << "Course: Scripting and Programming Applications" << std::endl;
-    std::cout << "Programming Language Used: C++" << std::endl;
-    std::cout << "WGU student ID: 011395991" << std::endl;
-    std::cout << "Student Name: Drake Davis" << std::endl;
+
 
 
     Roster roster;

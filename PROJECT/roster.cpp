@@ -1,27 +1,29 @@
-// roster.cpp
+// roster.cpp file
 #include "roster.h"
 #include <iostream>
 
-// Constructor to initialize the ptr array
+// Constructor initializes the ptr array
 Roster::Roster() {
     for (int i = 0; i < 5; ++i) {
         classRosterArray[i] = nullptr;
     }
 }
 
-// Implement function add student
+/*Function adds a student to array
+Parameters include ID, full name, age, email, days per [3] courses, and degreeProgram 
+*/ 
 void Roster::add(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age,
     int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram) {
     int daysInCourse[3] = { daysInCourse1, daysInCourse2, daysInCourse3 };
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] == nullptr) {
-            classRosterArray[i] = new Student(studentID, daysInCourse, age, firstName, lastName, emailAddress, degreeProgram); // Added break to exit loop after adding
+            classRosterArray[i] = new Student(studentID, daysInCourse, age, firstName, lastName, emailAddress, degreeProgram); 
             break;
         }
     }
 }
 
-// implment function remove
+// Function removes studentID from array
 void Roster::remove(std::string studentID) {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
@@ -34,7 +36,7 @@ void Roster::remove(std::string studentID) {
     std::cout << "Student " << studentID << " not found." << std::endl;
 }
 
-// implment function print all
+// Function prints all students from array
 void Roster::printAll() const {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr) {
@@ -43,7 +45,7 @@ void Roster::printAll() const {
     }
 }
 
-// function print average days in course
+// Function prints average days in course for student
 void Roster::printAverageDaysInCourse(std::string studentID) const {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
@@ -55,7 +57,7 @@ void Roster::printAverageDaysInCourse(std::string studentID) const {
     }
 }
 
-// function prints invalid email
+// Function prints invalid emails not in array
 void Roster::printInvalidEmails() const {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr) {
@@ -67,7 +69,7 @@ void Roster::printInvalidEmails() const {
     }
 }
 
-// function print degrees by program
+// Function prints degrees via student's degreeProgram
 void Roster::printByDegreeProgram(DegreeProgram degreeProgram) const {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr && classRosterArray[i]->getDegreeProgram() == degreeProgram) {
@@ -76,6 +78,8 @@ void Roster::printByDegreeProgram(DegreeProgram degreeProgram) const {
     }
 }
 
+
+// Destructor to release allocated memory 
 Roster::~Roster() {
     for (int i = 0; i < 5; ++i) {
         if (classRosterArray[i] != nullptr) {
